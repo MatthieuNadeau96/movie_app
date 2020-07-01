@@ -7,7 +7,7 @@ class GenreListBloc {
   final BehaviorSubject<GenreResponse> _subject =
       BehaviorSubject<GenreResponse>();
 
-  getMovies() async {
+  getGenres() async {
     GenreResponse response = await _repository.getGenres();
     _subject.sink.add(response);
   }

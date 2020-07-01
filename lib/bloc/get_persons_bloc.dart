@@ -19,4 +19,4 @@ class PersonsListBLoc {
   BehaviorSubject<PersonRespose> get subject => _subject;
 }
 
-final moviesByGenre = PersonsListBLoc();
+final personsBloc = PersonsListBLoc();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movie_app/bloc/get_now_playing_bloc.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/model/movie_response.dart';
@@ -19,7 +20,7 @@ class _NowPlayingState extends State<NowPlaying> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<MovieResponse>(
       stream: nowPlayingMoviesBloc.subject.stream,
       builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
         if (snapshot.hasData) {
@@ -83,6 +84,7 @@ class _NowPlayingState extends State<NowPlaying> {
           align: IndicatorAlign.bottom,
           indicatorColor: Style.Colors.titleColor,
           indicatorSelectorColor: Style.Colors.secondColor,
+          shape: IndicatorShape.circle(size: 5.0),
           pageView: PageView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: movies.take(5).length,
@@ -96,8 +98,58 @@ class _NowPlayingState extends State<NowPlaying> {
                         shape: BoxShape.rectangle,
                         image: DecorationImage(
                           image: NetworkImage(
-                              'https://image.tmdb.org/t/p/original/' +
-                                  movies[index].backPoster),
+                            'https://image.tmdb.org/t/p/original/' +
+                                movies[index].backPoster,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Style.Colors.mainColor.withOpacity(1.0),
+                            Style.Colors.mainColor.withOpacity(0.0),
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          stops: [
+                            0.0,
+                            0.9,
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Icon(
+                        FontAwesomeIcons.playCircle,
+                        color: Style.Colors.secondColor,
+                        size: 40,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 30,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        width: 250,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              movies[index].title,
+                              style: TextStyle(
+                                height: 1.5,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
